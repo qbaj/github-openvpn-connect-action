@@ -3172,6 +3172,7 @@ const run = (callback) => {
   const password = core.getInput("password").trim();
   const clientKey = core.getInput("client_key").trim();
   const tlsAuthKey = core.getInput("tls_auth_key").trim();
+  const tlsCryptKey = core.getInput("tls_crypt_key").trim();
 
   if (!fs.existsSync(configFile)) {
     throw new Error(`config file '${configFile}' not found`);
@@ -3196,6 +3197,11 @@ const run = (callback) => {
   if (tlsAuthKey) {
     fs.appendFileSync(configFile, "tls-auth ta.key 1\n");
     fs.writeFileSync("ta.key", tlsAuthKey, { mode: 0o600 });
+  }
+
+  if (tlsCryptKey) {
+    fs.appendFileSync(configFile, "tls-crypt ta.key 1\n");
+    fs.writeFileSync("ta.key", tlsCryptKey, { mode: 0o600 });
   }
 
   core.info("========== begin configuration ==========");
